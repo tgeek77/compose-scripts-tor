@@ -1,0 +1,34 @@
+version: "2"
+
+services:
+  tor:
+     image: goldy/tor-hidden-service:latest
+     links:
+          - wordpress
+     restart: always
+# Keep keys in volumes
+     volumes:
+          - "~/.keys/:/var/lib/tor/hidden_service/"
+     environment:
+        # Set mapping ports
+         WORDPRESS_PORTS: "80:80"
+  db:
+     image: mariadb
+     restart: always
+     environment:
+         MYSQL_ROOT_PASSWORD: rootpass
+         MYSQL_DATABASE: wordpress
+         MYSQL_USER: wordpress
+         MYSQL_PASSWORD: wordpress123
+
+  wordpress:
+     depends_on:
+          - db
+     image: wordpress:latest
+     links:
+          - db
+     restart: always
+     environment:
+         WORDPRESS_DB_HOST: db:3306
+         WORDPRESS_DB_USER: wordpress
+         WORDPRESS_DB_PASSWORD: wordpress123

@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+  tor:
+     image: goldy/tor-hidden-service:latest
+     links:
+          - apache
+     volumes:
+          - "~/.keys/:/var/lib/tor/hidden_service/"
+     environment:
+                 APACHE_PORTS: "80:80"
+  db:
+     image: mariadb
+     restart: always
+     environment:
+         MYSQL_ROOT_PASSWORD: rootpass
+         MYSQL_DATABASE: myproject
+         MYSQL_USER: userid
+         MYSQL_PASSWORD: myproject123
+
+  apache:
+     depends_on:
+          - db
+     build: .
+     links:
+          - db:db
+     restart: always
+     volumes:
+          - "~/www/:/var/www/html/"

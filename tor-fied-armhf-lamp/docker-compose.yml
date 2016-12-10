@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+  tor:
+     image: jsevans/docker-tor-armhf-hidden-service
+     links:
+          - apache
+     volumes:
+          - "~/.keys/:/var/lib/tor/hidden_service/"
+     environment:
+                 APACHE_PORTS: "80:80"
+  db:
+     image: jsevans/marias-arm
+     restart: always
+     environment:
+         MYSQL_ROOT_PASSWORD: rootpass
+         MYSQL_DATABASE: myproject
+         MYSQL_USER: userid
+         MYSQL_PASSWORD: myproject123
+
+  apache:
+     depends_on:
+          - db
+     image: jsevans/apache-arm
+     links:
+          - db:db
+     restart: always
+     volumes:
+          - "~/www/:/var/www/html/"
