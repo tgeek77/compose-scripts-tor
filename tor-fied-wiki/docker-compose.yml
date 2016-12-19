@@ -1,0 +1,35 @@
+version: "2"
+
+services:
+  tor:
+     image: goldy/tor-hidden-service:latest
+     links:
+          - wiki
+     restart: always
+# Keep keys in volumes
+     volumes:
+          - "~/.keys/:/var/lib/tor/hidden_service/"
+     environment:
+        # Set mapping ports
+         WIKI_PORTS: "80:80"
+  db:
+     image: mariadb
+     restart: always
+     environment:
+         MYSQL_ROOT_PASSWORD: rootpass
+         MYSQL_DATABASE: wiki
+         MYSQL_USER: wikigod
+         MYSQL_PASSWORD: wikipass123
+
+  wiki:
+     depends_on:
+          - db
+     image: synctree/mediawiki
+     links:
+          - db
+     restart: always
+     environment:
+         MEDIAWIKI_DB_HOST: db:3306
+         MEDIAWIKI_DB_USER: wikigod
+         MEDIAWIKI_DB_PASSWORD: wikipass123
+         MEDIAWIKI_DB_NAME: wiki
