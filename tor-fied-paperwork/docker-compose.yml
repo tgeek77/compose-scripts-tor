@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+  tor:
+     image: goldy/tor-hidden-service:latest
+     links:
+          - paperwork
+     restart: always
+     volumes:
+          - "~/.keys/:/var/lib/tor/hidden_service/"
+     environment:
+        # Set mapping ports
+         PAPERWORK_PORTS: "80:80"
+
+  paperwork:
+     image: conoria/paperwork
+     links:
+          - paperwork-db:paperwork-db
+     #environment:
+     #     - PAPERWORK_URL=paperwork.example.com
+
+  paperwork-db:
+     image: mariadb
+     #volumes:
+     #     - pwdb:/var/lib/mysql
+     environment:
+          - MYSQL_ROOT_PASSWORD=paperwork
+          - MYSQL_DATABASE=paperwork
+          - MYSQL_USER=paperwork
+          - MYSQL_PASSWORD=paperwork
+
