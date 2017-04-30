@@ -1,16 +1,24 @@
 version: "2"
 services:
+<<<<<<< HEAD
   #tor:
   #   image: goldy/tor-hidden-service:latest
   #   links:
   #        - wordpress
   #   restart: always
+=======
+  tor:
+     image: jsevans/docker-tor-hidden-service-suse:latest
+     links:
+          - wordpress
+     restart: always
+>>>>>>> 83fdf5a29cd7c2cdeac36b2f0cdcbebc311a3c89
 # Keep keys in volumes
-#   volumes:
-#        - "~/.keys/:/var/lib/tor/hidden_service/"
-#    environment:
+   volumes:
+        - "~/.keys/:/var/lib/tor/hidden_service/"
+    environment:
 #       # Set mapping ports
-#        WORDPRESS_PORTS: "80:80"
+        WORDPRESS_PORTS: "80:80"
   db:
      image: mariadb
      restart: always
