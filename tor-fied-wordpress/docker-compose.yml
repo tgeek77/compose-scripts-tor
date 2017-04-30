@@ -1,23 +1,15 @@
 version: "2"
 services:
-<<<<<<< HEAD
-  #tor:
-  #   image: goldy/tor-hidden-service:latest
-  #   links:
-  #        - wordpress
-  #   restart: always
-=======
   tor:
-     image: jsevans/docker-tor-hidden-service-suse:latest
+     image: goldy/tor-hidden-service:latest
      links:
           - wordpress
      restart: always
->>>>>>> 83fdf5a29cd7c2cdeac36b2f0cdcbebc311a3c89
 # Keep keys in volumes
-   volumes:
-        - "~/.keys/:/var/lib/tor/hidden_service/"
-    environment:
-#       # Set mapping ports
+     volumes:
+          - /var/lib/data/tor:/var/lib/tor/hidden_service
+     environment:
+# Set mapping ports
         WORDPRESS_PORTS: "80:80"
   db:
      image: mariadb
@@ -28,7 +20,7 @@ services:
          MYSQL_USER: wordpress
          MYSQL_PASSWORD: wordpress123
      volumes:
-        - /home/jsevans/bin/paperwork/data:/var/lib/mysql
+          - /var/lib/data/mysql:/var/lib/mysql
 
   wordpress:
      depends_on:
