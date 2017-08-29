@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  tor:
+     image: goldy/tor-hidden-service:latest
+     links:
+          - tomcat
+     restart: always
+# Keep keys in volumes
+     volumes:
+          - "~/.keys/:/var/lib/tor/hidden_service/"
+     environment:
+        # Set mapping ports
+         TOMCAT_PORTS: "80:8080"
+
+  tomcat:
+     image: jsevans/tomcat-opensuse
+     restart: always
