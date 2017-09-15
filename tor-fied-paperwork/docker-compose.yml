@@ -16,13 +16,11 @@ services:
      image: conoria/paperwork
      links:
           - paperwork-db:paperwork-db
-     #environment:
-     #     - PAPERWORK_URL=paperwork.example.com
 
   paperwork-db:
      image: mariadb
-     #volumes:
-     #     - pwdb:/var/lib/mysql
+     volumes:
+          - pwdb:/var/lib/mysql
      environment:
           - MYSQL_ROOT_PASSWORD=paperwork
           - MYSQL_DATABASE=paperwork
