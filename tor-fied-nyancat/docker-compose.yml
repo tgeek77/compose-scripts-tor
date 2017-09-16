@@ -1,0 +1,17 @@
+version: "2"
+services:
+  tor:
+     image: goldy/tor-hidden-service:latest
+     links:
+          - nyan
+     restart: always
+# Keep keys in volumes
+     volumes:
+          - ./tor:/var/lib/tor/hidden_service
+     environment:
+# Set mapping ports
+        NYAN_PORTS: "23:23"
+
+  nyan:
+     image: ddhhz/nyancat-server
+     restart: always
