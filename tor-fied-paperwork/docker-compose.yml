@@ -7,7 +7,7 @@ services:
           - paperwork
      restart: always
      volumes:
-          - "~/.keys/:/var/lib/tor/hidden_service/"
+          - ./keys/:/var/lib/tor/hidden_service/
      environment:
         # Set mapping ports
          PAPERWORK_PORTS: "80:80"
@@ -19,11 +19,12 @@ services:
 
   paperwork-db:
      image: mariadb
-     volumes:
-          - pwdb:/var/lib/mysql
+     restart: always
      environment:
-          - MYSQL_ROOT_PASSWORD=paperwork
-          - MYSQL_DATABASE=paperwork
-          - MYSQL_USER=paperwork
-          - MYSQL_PASSWORD=paperwork
+         MYSQL_ROOT_PASSWORD: rootpass
+         MYSQL_DATABASE: wordpress
+         MYSQL_USER: wordpress
+         MYSQL_PASSWORD: wordpress123
+     volumes:
+          - ./mysql:/var/lib/mysql
 

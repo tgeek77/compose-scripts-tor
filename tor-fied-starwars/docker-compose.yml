@@ -1,0 +1,17 @@
+version: "2"
+services:
+  tor:
+     image: goldy/tor-hidden-service:latest
+     links:
+          - starwars
+     restart: always
+# Keep keys in volumes
+     volumes:
+          - ./tor:/var/lib/tor/hidden_service
+     environment:
+# Set mapping ports
+        STARWARS_PORTS: "1977:23"
+
+  starwars:
+     image: rohan/ascii-telnet-server
+     restart: always
