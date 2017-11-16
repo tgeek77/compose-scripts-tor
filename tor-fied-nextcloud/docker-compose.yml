@@ -3,14 +3,14 @@ services:
   tor:
      image: goldy/tor-hidden-service:latest
      links:
-          - owncloud
+          - nextcloud
      restart: always
 # Keep keys in volumes
      volumes:
           - ./tor:/var/lib/tor/hidden_service
      environment:
 # Set mapping ports
-        OWNCLOUD_PORTS: "80:80"
+        NEXTCLOUD_PORTS: "80:80"
   db:
      image: mariadb
      restart: always
@@ -22,8 +22,12 @@ services:
      volumes:
           - ./mysql:/var/lib/mysql
 
-  owncloud:
-    image: owncloud:9
-    restart: always
+  nextcloud:
+    image: nextcloud
     ports:
-          - 8080:80
+      - 8080:80
+    links:
+      - db
+    volumes:
+      - ./nextcloud:/var/www/html
+    restart: always
