@@ -1,0 +1,29 @@
+version: "2"
+services:
+  tor:
+     image: goldy/tor-hidden-service:latest
+     links:
+          - owncloud
+     restart: always
+# Keep keys in volumes
+     volumes:
+          - /var/lib/data/tor:/var/lib/tor/hidden_service
+     environment:
+# Set mapping ports
+        WORDPRESS_PORTS: "80:80"
+  db:
+     image: mariadb
+     restart: always
+     environment:
+         MYSQL_ROOT_PASSWORD: rootpass
+         MYSQL_DATABASE: owncloud
+         MYSQL_USER: cloudadmin
+         MYSQL_PASSWORD: wordpress123
+     volumes:
+          - /var/lib/data/mysql:/var/lib/mysql
+
+  owncloud:
+    image: owncloud
+    restart: always
+    ports:
+          - 8080:80
