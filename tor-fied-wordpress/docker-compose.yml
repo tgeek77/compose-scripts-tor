@@ -21,7 +21,9 @@ services:
          MYSQL_PASSWORD: wordpress123
      volumes:
           - ./mysql:/var/lib/mysql
-
+     networks:
+          - faraday
+          
   wordpress:
      depends_on:
           - db
@@ -32,6 +34,6 @@ services:
      environment:
          WORDPRESS_DB_HOST: db:3306
          WORDPRESS_DB_USER: wordpress
-         WORDPRESS_DB_PASSWORD: wordpress123     
-     volumes:
-          - ./wp:/var/www/
+         WORDPRESS_DB_PASSWORD: wordpress123
+     networks:
+          - faraday
