@@ -7,7 +7,7 @@ services:
      restart: always
 # Keep keys in volumes
      volumes:
-          - /var/lib/data/tor:/var/lib/tor/hidden_service
+          - ./tor:/var/lib/tor/hidden_service
      environment:
 # Set mapping ports
         WORDPRESS_PORTS: "80:80"
@@ -20,7 +20,7 @@ services:
          MYSQL_USER: wordpress
          MYSQL_PASSWORD: wordpress123
      volumes:
-          - /var/lib/data/mysql:/var/lib/mysql
+          - ./mysql:/var/lib/mysql
 
   wordpress:
      depends_on:
@@ -32,4 +32,6 @@ services:
      environment:
          WORDPRESS_DB_HOST: db:3306
          WORDPRESS_DB_USER: wordpress
-         WORDPRESS_DB_PASSWORD: wordpress123
+         WORDPRESS_DB_PASSWORD: wordpress123     
+     volumes:
+          - ./wp:/var/www/
