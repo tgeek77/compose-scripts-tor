@@ -22,7 +22,7 @@ services:
      volumes:
           - ./mysql:/var/lib/mysql
      networks:
-          - faraday
+          - outside
           
   wordpress:
      depends_on:
@@ -36,4 +36,9 @@ services:
          WORDPRESS_DB_USER: wordpress
          WORDPRESS_DB_PASSWORD: wordpress123
      networks:
-          - faraday
+          - outside
+          
+networks:
+  outside:
+    external:
+      name: faraday
