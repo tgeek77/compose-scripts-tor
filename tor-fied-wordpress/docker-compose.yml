@@ -13,7 +13,7 @@ services:
         WORDPRESS_PORTS: "80:80"
 
 
-db:
+  db:
      image: mariadb
      restart: always
      environment:
