@@ -11,7 +11,9 @@ services:
      environment:
 # Set mapping ports
         WORDPRESS_PORTS: "80:80"
-  db:
+
+
+db:
      image: mariadb
      restart: always
      environment:
@@ -21,8 +23,7 @@ services:
          MYSQL_PASSWORD: wordpress123
      volumes:
           - ./mysql:/var/lib/mysql
-     networks:
-          - outside
+
           
   wordpress:
      depends_on:
@@ -35,10 +36,3 @@ services:
          WORDPRESS_DB_HOST: db:3306
          WORDPRESS_DB_USER: wordpress
          WORDPRESS_DB_PASSWORD: wordpress123
-     networks:
-          - outside
-          
-networks:
-  outside:
-    external:
-      name: faraday
