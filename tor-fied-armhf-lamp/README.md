@@ -12,14 +12,14 @@ These are docker-compose and dockerfile scripts for creating a simple vanilla la
 
 ## Special thanks to:
 
- [goldy](https://hub.docker.com/r/goldy/tor-hidden-service/) for his project which allowed me to build this one.
+ [jsevans](https://hub.docker.com/r/jsevans/docker-tor-hidden-service/) for his project which allowed me to build this one.
 
 ## About the scripts:
 
 docker-compose.yml calls on three images:
 
 jsevans/docker-tor-armhf-hidden-service
-This is my ARM port of the https://hub.docker.com/r/goldy/tor-hidden-service/ image.
+This is my ARM port of the https://hub.docker.com/r/jsevans/docker-tor-hidden-service/ image.
 
 jsevans/marias-arm
 This is my ARM port of the official mariadb image.

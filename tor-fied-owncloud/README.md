@@ -3,7 +3,7 @@
 
 This is a docker-compose script for creating a simple wordpress hidden service onion.
 
-### Special thanks to [cmehay](https://github.com/cmehay/docker-tor-hidden-service) and to the [Wordpress project](https://hub.docker.com/_/wordpress/) for their projects which allowed me to build this one.
+### Special thanks to [cmehay](https://github.com/cmehay/docker-docker-tor-hidden-service) and to the [Wordpress project](https://hub.docker.com/_/wordpress/) for their projects which allowed me to build this one.
 
 ### About the script:
 In truth, very little was done apart from copying and pasting from the two above mentioned projects into a new docker-compose file and tailoring it a little to make the two projects works together. 

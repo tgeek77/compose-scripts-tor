@@ -5,7 +5,7 @@ This is a docker-compose script for creating a simple Ghost installation.
 
 ### Special thanks to:
 
-[cmehay](https://github.com/cmehay/docker-tor-hidden-service)
+[cmehay](https://github.com/cmehay/docker-docker-tor-hidden-service)
 [ghost](https://hub.docker.com/_/ghost/)
 
 for their projects which allowed me to build this one.

@@ -3,7 +3,7 @@
 
 These are docker-compose and dockerfile scripts for creating a simple vanilla lamp stack runing as a hidden service onion.
 
-#### Special thanks to [cmehay](https://github.com/cmehay/docker-tor-hidden-service) for their projects which allowed me to build this one.
+#### Special thanks to [cmehay](https://github.com/cmehay/docker-docker-tor-hidden-service) for their projects which allowed me to build this one.
 
 #### About the scripts:
 
