@@ -1,7 +1,8 @@
 version: "2"
 services:
   tor:
-     image: jsevans/docker-tor-hidden-service:latest
+     image: jsevans/tor-hidden-service:latest
+     #image: jsevans/tor-hidden-service-v3:latest
      links:
           - starwars
      restart: always
