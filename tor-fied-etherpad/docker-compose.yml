@@ -11,7 +11,7 @@ services:
           - .tor:/var/lib/tor/hidden_service
      environment:
 # Set mapping ports
-         ETHERPAD_PORTS: "9001:9001"
+         ETHERPAD_PORTS: "80:9001"
         
   db:
      image: mariadb
@@ -27,7 +27,6 @@ services:
       build: etherpad_build/
       depends_on:
           - db
-      #image: tvelocity/etherpad-lite
       links:
           - db
       restart: always
