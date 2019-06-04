@@ -43,3 +43,13 @@ The Tor image was originally published [here](https://github.com/cmehay/docker-t
 
 Note:
 Not all scripts have been updated yet. I will be updating them to build the app and the Tor service from source as I have time. All scripts are testing on both x86 and ARM64 architectures.
+
+### How to find my .onion address
+
+A simple script called *v3onions* is available in the Tor container to get the .onion url when the container is running.
+
+```
+$ docker exec my_tor_container v3onions
+/var/lib/tor/hidden_service/my_tor_container/hostname
+p7gyaqryx6hru34lodxorn7cr6jglnpe3huwzqffo6mogwkfwn6d7iyd.onion
+```
