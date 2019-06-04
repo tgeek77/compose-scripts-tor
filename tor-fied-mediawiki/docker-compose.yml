@@ -2,13 +2,13 @@ version: "2"
 
 services:
   tor:
-     image: jsevans/tor-hidden-service:latest
+     build: tor_build/
      links:
           - mediawiki
      restart: always
 # Keep keys in volumes
      volumes:
-          - "~/.keys/:/var/lib/tor/hidden_service/"
+          - ".tor/:/var/lib/tor/hidden_service/"
      environment:
         # Set mapping ports
          MEDIAWIKI_PORTS: "80:80"
@@ -20,11 +20,14 @@ services:
          MYSQL_DATABASE: mediawiki
          MYSQL_USER: wikigod
          MYSQL_PASSWORD: wikipass123
+     volumes:
+          - ".db/:/var/lib/mysql"
+
 
   mediawiki:
      depends_on:
           - db
-     image: synctree/mediawiki
+     build: mediawiki_build/
      links:
           - db
      restart: always
@@ -32,3 +35,4 @@ services:
          MEDIAWIKI_DB_HOST: db:3306
          MEDIAWIKI_DB_USER: wikigod
          MEDIAWIKI_DB_PASSWORD: wikipass123
+
