@@ -1,0 +1,21 @@
+command: tor
+
+user: tor
+group: tor
+
+secret_env:
+    - '*_KEY'
+    - '*_PORTS'
+    - '*_SERVICE_NAME'
+
+pre_conf_commands:
+    - onions --setup-hosts
+
+post_conf_commands:
+    - chown -R tor:tor $HOME
+
+reload:
+    files:
+        - /etc/tor/torrc
+
+debug: false

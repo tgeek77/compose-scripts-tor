@@ -1,0 +1,22 @@
+{% for service_group in services %}
+HiddenServiceDir /var/lib/tor/hidden_service/{{service_group.name}}
+{% for service in service_group.services %}
+{% for port in service.ports %}
+{% if port.is_socket %}
+HiddenServicePort {{port.port_from}} {{port.dest}}
+{% endif %}
+{% if not port.is_socket %}
+HiddenServicePort {{port.port_from}} {{service.host}}:{{port.dest}}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+
+{% if 'RELAY' in env %}
+ORPort 9001
+{% endif %}
+
+SocksPort 0
+
+# useless line for Jinja bug 
+HiddenServiceVersion 3
