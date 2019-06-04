@@ -39,7 +39,7 @@ In this example you can see that again we are building the app from source. The 
 
 ### About [Tor](https://torproject.org)
 
-The Tor image was originally published [here](https://github.com/cmehay/docker-tor-hidden-service) by [cmehay](https://github.com/cmehay). My fork is [here](https://github.com/tgeek77/tor-hidden-service). All images in this repository are based on my [v3 Onion](https://github.com/tgeek77/tor-hidden-service/tree/v3) branch.
+The Tor image was originally published [here](https://github.com/cmehay/docker-tor-hidden-service) by [cmehay](https://github.com/cmehay). My fork is [here](https://github.com/tgeek77/tor-hidden-service). All images in this repository will be based on my [v3 Onion](https://github.com/tgeek77/tor-hidden-service/tree/v3) branch.
 
 Note:
 Not all scripts have been updated yet. I will be updating them to build the app and the Tor service from source as I have time. All scripts are testing on both x86 and ARM64 architectures.
