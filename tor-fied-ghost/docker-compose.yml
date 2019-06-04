@@ -2,25 +2,20 @@ version: "2"
 
 services:
   tor:
-     image: jsevans/tor-hidden-service:latest
+     build: tor_build/
      links:
           - ghost
      restart: always
 # Keep keys in volumes
      volumes:
-          - "~/.keys/:/var/lib/tor/hidden_service/"
+          - ".tor/:/var/lib/tor/hidden_service/"
      environment:
         # Set mapping ports
          GHOST_PORTS: "80:2368"
 
   ghost:
-     #depends_on:
-     #     - db
-     image: ghost
-     #links:
-     #     - db
+     build: ghost_build/
      restart: always
-     #environment:
-      #   MEDIAWIKI_DB_HOST: db:3306
-      #   MEDIAWIKI_DB_USER: wikigod
-      #   MEDIAWIKI_DB_PASSWORD: wikipass123
+     ports:
+             - 2368:2368
+

@@ -2,7 +2,7 @@ version: "2"
 
 services:
   tor:
-     image: jsevans/aarch64-tor-hidden-service
+     build: tor_build/
      links:
           - db
      restart: always
