@@ -24,7 +24,7 @@ services:
      volumes:
           - .data:/var/lib/mysql
   etherpad:
-      build: .
+      build: etherpad_build/
       depends_on:
           - db
       #image: tvelocity/etherpad-lite
