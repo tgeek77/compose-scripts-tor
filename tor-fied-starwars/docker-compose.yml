@@ -1,18 +1,17 @@
 version: "2"
 services:
   tor:
-     image: jsevans/tor-hidden-service:latest
-     #image: jsevans/tor-hidden-service-v3:latest
+     build: tor_build/
      links:
           - starwars
      restart: always
 # Keep keys in volumes
      volumes:
-          - ./tor:/var/lib/tor/hidden_service
+          - .tor:/var/lib/tor/hidden_service
      environment:
 # Set mapping ports
         STARWARS_PORTS: "1977:23"
 
   starwars:
-     image: rohan/ascii-telnet-server
+     build: starwars_build/
      restart: always

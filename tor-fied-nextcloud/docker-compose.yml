@@ -1,13 +1,13 @@
 version: "2"
 services:
   tor:
-     image: jsevans/tor-hidden-service:latest
+     build: tor_build/
      links:
           - nextcloud
      restart: always
 # Keep keys in volumes
      volumes:
-          - ./tor:/var/lib/tor/hidden_service
+          - .tor:/var/lib/tor/hidden_service
      environment:
 # Set mapping ports
         NEXTCLOUD_PORTS: "80:80"
@@ -20,14 +20,14 @@ services:
          MYSQL_USER: cloudadmin
          MYSQL_PASSWORD: wordpress123
      volumes:
-          - ./mysql:/var/lib/mysql
+          - .db:/var/lib/mysql
 
   nextcloud:
-    image: nextcloud
+    build: nextcloud_build/
     ports:
-      - 8080:80
+      - 80:80
     links:
       - db
     volumes:
-      - ./nextcloud:/var/www/html
+      - .nextcloud:/var/www/html
     restart: always
