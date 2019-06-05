@@ -2,11 +2,11 @@ version: "2"
 
 services:
   tor:
-     image: jsevans/tor-hidden-service:latest
+     build: tor_build/
      links:
           - apache
      volumes:
-          - "~/.keys/:/var/lib/tor/hidden_service/"
+          - ".tor/:/var/lib/tor/hidden_service/"
      environment:
                  APACHE_PORTS: "80:80"
   db:
@@ -21,9 +21,9 @@ services:
   apache:
      depends_on:
           - db
-     build: .
+     build: lamp_build/
      links:
           - db:db
      restart: always
      volumes:
-          - "~/www/:/var/www/html/"
+          - ".www/:/var/www/html/"
