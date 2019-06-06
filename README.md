@@ -53,3 +53,6 @@ $ docker exec my_tor_container v3onions
 /var/lib/tor/hidden_service/my_tor_container/hostname
 p7gyaqryx6hru34lodxorn7cr6jglnpe3huwzqffo6mogwkfwn6d7iyd.onion
 ```
+### Suggestions wanted!
+
+In the future, I hope to add scripts for Gitlab, Rocketchat, and maybe Mastadon.
