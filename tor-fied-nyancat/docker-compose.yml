@@ -1,7 +1,7 @@
 version: "2"
 services:
   tor:
-     image: jsevans/tor-hidden-service:latest
+     build: tor_build/
      links:
           - nyan
      restart: always
@@ -13,5 +13,5 @@ services:
         NYAN_PORTS: "23:23"
 
   nyan:
-     image: ddhhz/nyancat-server
+     build: nyan_build/
      restart: always
