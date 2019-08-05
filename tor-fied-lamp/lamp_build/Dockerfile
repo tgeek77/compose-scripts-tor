@@ -22,5 +22,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install php7.2 \
 	php-tcpdf
 COPY apache2.conf /etc/apache2/
 COPY 000-default.conf /etc/apache2/sites-available/
+COPY other-vhosts-access-log.conf /etc/apache2/conf-available/other-vhosts-access-log.conf
 CMD /usr/sbin/apache2ctl -D FOREGROUND
 EXPOSE 80

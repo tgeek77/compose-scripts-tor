@@ -26,4 +26,4 @@ services:
           - db:db
      restart: always
      volumes:
-          - "~/www/:/var/www/html/"
+          - "~/www/:/srv/www/htdocs"
