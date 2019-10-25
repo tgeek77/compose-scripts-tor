@@ -1,7 +1,7 @@
 version: "2"
 services:
   tor:
-     image: jsevans/tor-hidden-service:latest
+     build: tor_build/
      links:
           - wordpress
      restart: always
