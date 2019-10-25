@@ -1,13 +1,19 @@
 # https://docs.ghost.org/faq/node-versions/
 # https://github.com/nodejs/LTS
-FROM node:10-alpine
+FROM node:10-slim
 
-# grab su-exec for easy step-down from root
-RUN apk add --no-cache 'su-exec>=0.2'
-
-RUN apk add --no-cache \
-# add "bash" for "[["
-		bash
+# grab gosu for easy step-down from root
+ENV GOSU_VERSION 1.10
+RUN set -x \
+	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
+	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
+	&& export GNUPGHOME="$(mktemp -d)" \
+	&& gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+	&& { command -v gpgconf && gpgconf --kill all || :; } \
+	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
+	&& chmod +x /usr/local/bin/gosu \
+	&& gosu nobody true
 
 ENV NODE_ENV production
 
@@ -25,15 +31,15 @@ RUN set -eux; \
 	mkdir -p "$GHOST_INSTALL"; \
 	chown node:node "$GHOST_INSTALL"; \
 	\
-	su-exec node ghost install "$GHOST_VERSION" --db sqlite3 --no-prompt --no-stack --no-setup --dir "$GHOST_INSTALL"; \
+	gosu node ghost install "$GHOST_VERSION" --db sqlite3 --no-prompt --no-stack --no-setup --dir "$GHOST_INSTALL"; \
 	\
 # Tell Ghost to listen on all ips and not prompt for additional configuration
 	cd "$GHOST_INSTALL"; \
-	su-exec node ghost config --ip 0.0.0.0 --port 2368 --no-prompt --db sqlite3 --url http://localhost:2368 --dbpath "$GHOST_CONTENT/data/ghost.db"; \
-	su-exec node ghost config paths.contentPath "$GHOST_CONTENT"; \
+	gosu node ghost config --ip 0.0.0.0 --port 2368 --no-prompt --db sqlite3 --url http://localhost:2368 --dbpath "$GHOST_CONTENT/data/ghost.db"; \
+	gosu node ghost config paths.contentPath "$GHOST_CONTENT"; \
 	\
 # make a config.json symlink for NODE_ENV=development (and sanity check that it's correct)
-	su-exec node ln -s config.production.json "$GHOST_INSTALL/config.development.json"; \
+	gosu node ln -s config.production.json "$GHOST_INSTALL/config.development.json"; \
 	readlink -f "$GHOST_INSTALL/config.development.json"; \
 	\
 # need to save initial content for pre-seeding empty volumes
@@ -47,17 +53,22 @@ RUN set -eux; \
 	cd "$GHOST_INSTALL/current"; \
 # scrape the expected version of sqlite3 directly from Ghost itself
 	sqlite3Version="$(npm view . optionalDependencies.sqlite3)"; \
-	if ! su-exec node yarn add "sqlite3@$sqlite3Version" --force; then \
+	if ! gosu node yarn add "sqlite3@$sqlite3Version" --force; then \
 # must be some non-amd64 architecture pre-built binaries aren't published for, so let's install some build deps and do-it-all-over-again
-		apk add --no-cache --virtual .build-deps python make gcc g++ libc-dev; \
+		savedAptMark="$(apt-mark showmanual)"; \
+		apt-get update; \
+		apt-get install -y --no-install-recommends python make gcc g++ libc-dev; \
+		rm -rf /var/lib/apt/lists/*; \
 		\
-		su-exec node yarn add "sqlite3@$sqlite3Version" --force --build-from-source; \
+		gosu node yarn add "sqlite3@$sqlite3Version" --force --build-from-source; \
 		\
-		apk del --no-network .build-deps; \
+		apt-mark showmanual | xargs apt-mark auto > /dev/null; \
+		[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
+		apt-get purge -y --auto-remove; \
 	fi; \
 	\
-	su-exec node yarn cache clean; \
-	su-exec node npm cache clean --force; \
+	gosu node yarn cache clean; \
+	gosu node npm cache clean --force; \
 	npm cache clean --force; \
 	rm -rv /tmp/yarn* /tmp/v8*
 
