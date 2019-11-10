@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+  tor:
+     build: tor_build/
+     links:
+          - apache
+     volumes:
+          - ".tor/:/var/lib/tor/hidden_service/"
+     environment:
+          APACHE_PORTS: "80:80"
+  apache:
+     build: web_build/
+     restart: always
+     volumes:
+          - "~/www/:/srv/www/htdocs/"
+          - "~/work/:/root/"
