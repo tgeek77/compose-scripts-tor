@@ -4,7 +4,7 @@ The "apache" image is based on [OpenSUSE Tumbleweed](https://en.opensuse.org/Por
 
 The image created by the "web_build" Dockerfile will create a rather huge image. It is designed to allow you to create websites using the markup language of your choice. You can either use Daps with Asciidoc, Sphinx with reStructuredText, or Pandoc with Markdown.
 
-To log into the container and use the tools, run: `docker -it exec torfiedweb_apache_1`.
+To log into the container and use the tools, run: `docker -it exec torfiedweb_apache_1 bash`.
 
 To fetch your Tor onion service url, run `docker exec torfiedweb_tor_1 v3onions`
 
