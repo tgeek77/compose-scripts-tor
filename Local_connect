@@ -1,0 +1,6 @@
+{tor_build *.init@localhost}
+{restart cxn
+} connect:127.0.0.1:8089
+{
+
+en: start PGP key string:
